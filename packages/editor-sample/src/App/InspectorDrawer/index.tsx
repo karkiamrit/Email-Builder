@@ -31,7 +31,7 @@ export default function InspectorDrawer() {
         width: inspectorDrawerOpen ? INSPECTOR_DRAWER_WIDTH : 0,
       }}
     >
-      <Box sx={{ width: INSPECTOR_DRAWER_WIDTH, height: 49, borderBottom: 1, borderColor: 'divider' }}>
+      <Box sx={{ width: INSPECTOR_DRAWER_WIDTH, height: 49, borderBottom: 1, borderColor: 'divider' }} >
         <Box px={2}>
           <Tabs value={selectedSidebarTab} onChange={(_, v) => setSidebarTab(v)}>
             <Tab value="styles" label="Styles" />

@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { MonitorOutlined, PhoneIphoneOutlined } from '@mui/icons-material';
-import { Box, Stack, SxProps, ToggleButton, ToggleButtonGroup, Tooltip } from '@mui/material';
+import { Label, MonitorOutlined, PhoneIphoneOutlined } from '@mui/icons-material';
+import { Box, Input, Stack, SxProps, ToggleButton, ToggleButtonGroup, Tooltip } from '@mui/material';
 import { Reader } from '@usewaypoint/email-builder';
 
 import EditorBlock from '../../documents/editor/EditorBlock';
@@ -25,6 +25,7 @@ export default function TemplatePanel() {
   const document = useDocument();
   const selectedMainTab = useSelectedMainTab();
   const selectedScreenSize = useSelectedScreenSize();
+
 
   let mainBoxSx: SxProps = {
     height: '100%',
@@ -94,6 +95,8 @@ export default function TemplatePanel() {
           <Stack direction="row" spacing={2}>
             <MainTabsGroup />
           </Stack>
+          
+
           <Stack direction="row" spacing={2}>
             <DownloadJson />
             <ImportJson />

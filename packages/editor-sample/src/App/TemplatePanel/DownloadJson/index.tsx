@@ -53,9 +53,6 @@ import { useMutation } from '@tanstack/react-query';
 // import {useMutation} from '@tanstack/react-query';
 
 export default function DownloadJson() {
-  const url = window.location.href;
-  const lastName = url.split("/").pop();
-
   const doc = useDocument();
   const href = useMemo(() => {
     return `data:text/plain,${encodeURIComponent(JSON.stringify(doc, null, '  '))}`;
@@ -81,7 +78,7 @@ export default function DownloadJson() {
       })
     }}
   );
-  const handleDownload = () => {
+  const handleCreate = () => {
     const newNotification = {
       title: lastName,
       html_content: jsonToHtml(doc),
@@ -96,7 +93,7 @@ export default function DownloadJson() {
 
   return (
     <Tooltip title="Create this template">
-      <IconButton onClick={handleDownload}>
+      <IconButton onClick={handleCreate}>
         <BorderColorSharp fontSize="small" />
       </IconButton>
     </Tooltip>
