@@ -14,7 +14,6 @@ export default function ShareButton() {
     location.hash = `#code/${btoa(c)}`;
     setMessage('The URL was updated. Copy it to share your current template.');
   };
-
   const onClose = () => {
     setMessage(null);
   };

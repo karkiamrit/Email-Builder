@@ -19,7 +19,7 @@ export default function HighlightedCodePanel({ type, value }: TextEditorPanelPro
         return;
     }
   }, [setCode, value, type]);
-
+  console.log(code);
   if (code === null) {
     return null;
   }
