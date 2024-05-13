@@ -27,17 +27,19 @@ export default function TemplatePanel() {
   const selectedMainTab = useSelectedMainTab();
   const selectedScreenSize = useSelectedScreenSize();
   const [editMode, setEditMode] = useState(false);
-  const hash = window.location.hash;
-  const parts = hash.split('/');
-  const firstPart = parts[1];
-  const lastPart = parts[parts.length - 1];
-  const hasId = !isNaN(Number(lastPart));
-  const id = Number(lastPart);
+ 
+  const url = new URL(window.location.href);
+  const hash = url.hash.slice(1); // remove the leading '#'
+  const [path, queryParams] = hash.split('?'); // split by '?'
+  const parts = path.split('/'); // split by '/'
+  const id = parts[parts.length - 1]; // take the last part
+  const hasId = !isNaN(Number(id));
+
   useEffect(() => {
-    if(firstPart === 'edit-template' && hasId === true){
+    if(hash.startsWith('sample/edit-template') && hasId === true){
       setEditMode(true);
     }
-  }, [firstPart, hasId]);
+  }, [ hasId]);
 
   let mainBoxSx: SxProps = {
     height: '100%',
@@ -110,7 +112,7 @@ export default function TemplatePanel() {
           
 
           <Stack direction="row" spacing={2}>
-            {!!!editMode ? (<DownloadJson />): (<EditJson id={id} />)}
+            {!!!editMode ? (<DownloadJson />): (<EditJson id={Number(id)} />)}
             <ImportJson />
             <ToggleButtonGroup value={selectedScreenSize} exclusive size="small" onChange={handleScreenSizeChange}>
               <ToggleButton value="desktop">

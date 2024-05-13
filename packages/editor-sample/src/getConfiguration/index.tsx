@@ -13,7 +13,7 @@ export default function getConfiguration(template: string, data?:any){
   if (template.startsWith('#sample/')) {
     const sampleName = template.replace('#sample/', '');
     if (sampleName.startsWith('edit-template/')) {
-      return MyTemplate({template: data?.json_content}); // Pass the template to EDIT_TEMPLATE
+      return MyTemplate({template: data}); // Pass the template to EDIT_TEMPLATE
     }
     if (sampleName.startsWith('create-template?')) {
       return EMPTY_EMAIL_MESSAGE; // Pass the template to EDIT_TEMPLATE

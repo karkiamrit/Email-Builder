@@ -7,7 +7,7 @@ import { AES, enc } from 'crypto-js';
 
 type TValue = {
   document: TEditorConfiguration;
-
+  notification: any,
   selectedBlockId: string | null;
   selectedSidebarTab: 'block-configuration' | 'styles';
   selectedMainTab: 'editor' | 'preview' | 'json' | 'html';
@@ -59,11 +59,13 @@ export async function fetchNotification() {
   }
   return res.json();
 }
+
 const newHash = window.location.hash;
 const finalHash = newHash.split('?')[0];
 const editorStateStore = create<TValue>(() => ({
   document: getConfiguration(finalHash),
   selectedBlockId: null,
+  notification: null,
   selectedSidebarTab: 'styles',
   selectedMainTab: 'editor',
   selectedScreenSize: 'desktop',
@@ -83,7 +85,7 @@ export async function fetchAndSetNotification() {
     document = getConfiguration(finalHash);
   }
 
-  editorStateStore.setState({ document });
+  editorStateStore.setState({ document, notification: data });
 }
 
 // Call the function somewhere in your application
@@ -91,6 +93,10 @@ fetchAndSetNotification();
 
 export function useDocument() {
   return editorStateStore((s) => s.document);
+}
+
+export function useNotification() {
+  return editorStateStore((s) => s.notification);
 }
 
 export function useSelectedBlockId() {

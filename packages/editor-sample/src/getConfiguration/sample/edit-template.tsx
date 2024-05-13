@@ -1,20 +1,19 @@
 import { TEditorConfiguration } from "../../documents/editor/core";
-import { useFetchNotification } from "./hook/useFetchNotification";
 
 type Notification = {
   id: number,
   title: string,
   html_content: string;
   text_content: string;
+  json_content: string;
   subject: string;
 }
 
-export default function MyTemplate({ template }: { template: any }): TEditorConfiguration {
-  console.log(JSON.stringify(template));
+export default function MyTemplate({ template }: { template: Notification }): TEditorConfiguration {
 
   let EDIT_TEMPLATE: TEditorConfiguration;
   if(template){
-    EDIT_TEMPLATE = JSON.parse(template);
+    EDIT_TEMPLATE = JSON.parse(template.json_content);
   }
   else{
     EDIT_TEMPLATE =  {
