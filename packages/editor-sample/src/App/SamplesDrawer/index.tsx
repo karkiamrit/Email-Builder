@@ -19,7 +19,6 @@ export default function SamplesDrawer() {
       // open={samplesDrawerOpen}
       sx={{
         width: samplesDrawerOpen ? SAMPLES_DRAWER_WIDTH : 0,
-        
       }}
     
     >
@@ -31,6 +30,7 @@ export default function SamplesDrawer() {
 
           <Stack alignItems="flex-start">
             <SidebarButton href="#">Empty</SidebarButton>
+            <SidebarButton href="#sample/EditTemplate">Edit Template</SidebarButton>
             <SidebarButton href="#sample/welcome">Welcome email</SidebarButton>
             <SidebarButton href="#sample/one-time-password">One-time passcode (OTP)</SidebarButton>
             <SidebarButton href="#sample/reset-password">Reset password</SidebarButton>

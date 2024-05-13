@@ -16,6 +16,30 @@ type TValue = {
   samplesDrawerOpen: boolean;
 };
 
+
+
+// const editorStateStore = create<TValue>(() => ({
+//   document: getConfiguration(window.location.hash, data),
+//   selectedBlockId: null,
+//   selectedSidebarTab: 'styles',
+//   selectedMainTab: 'editor',
+//   selectedScreenSize: 'desktop',
+
+//   inspectorDrawerOpen: true,
+//   samplesDrawerOpen: true,
+// }));
+
+export async function fetchNotification(){
+  const hash = window.location.hash;
+  const parts = hash.split('/');
+  const id = parts[parts.length - 1];
+  const res = await fetch(`http://localhost:8003/notifications/${id}`);
+  if (!res.ok) {
+    throw new Error('Network response was not ok');
+  }
+  return res.json();
+}
+
 const editorStateStore = create<TValue>(() => ({
   document: getConfiguration(window.location.hash),
   selectedBlockId: null,
@@ -26,6 +50,15 @@ const editorStateStore = create<TValue>(() => ({
   inspectorDrawerOpen: true,
   samplesDrawerOpen: true,
 }));
+
+export async function fetchAndSetNotification() {
+  const data = await fetchNotification();
+  const document = getConfiguration(window.location.hash, data);
+  editorStateStore.setState({ document });
+}
+
+// Call the function somewhere in your application
+fetchAndSetNotification();
 
 export function useDocument() {
   return editorStateStore((s) => s.document);

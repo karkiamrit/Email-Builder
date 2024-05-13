@@ -7,10 +7,14 @@ import RESET_PASSWORD from './sample/reset-password';
 import RESPOND_TO_MESSAGE from './sample/respond-to-message';
 import SUBSCRIPTION_RECEIPT from './sample/subscription-receipt';
 import WELCOME from './sample/welcome';
+import MyTemplate from './sample/edit-template';
 
-export default function getConfiguration(template: string) {
+export default function getConfiguration(template: string, data?:any){
   if (template.startsWith('#sample/')) {
     const sampleName = template.replace('#sample/', '');
+    if (sampleName.startsWith('edit-template/')) {
+      return MyTemplate({template: data?.json_content}); // Pass the template to EDIT_TEMPLATE
+    }
     switch (sampleName) {
       case 'welcome':
         return WELCOME;

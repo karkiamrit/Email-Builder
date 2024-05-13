@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { Label, MonitorOutlined, PhoneIphoneOutlined } from '@mui/icons-material';
-import { Box, Input, Stack, SxProps, ToggleButton, ToggleButtonGroup, Tooltip } from '@mui/material';
+import {  MonitorOutlined, PhoneIphoneOutlined } from '@mui/icons-material';
+import { Box,  Stack, SxProps, ToggleButton, ToggleButtonGroup, Tooltip } from '@mui/material';
 import { Reader } from '@usewaypoint/email-builder';
 
 import EditorBlock from '../../documents/editor/EditorBlock';
@@ -20,12 +20,24 @@ import ImportJson from './ImportJson';
 import JsonPanel from './JsonPanel';
 import MainTabsGroup from './MainTabsGroup';
 import ShareButton from './ShareButton';
+import EditJson from './EditJson';
 
 export default function TemplatePanel() {
   const document = useDocument();
   const selectedMainTab = useSelectedMainTab();
   const selectedScreenSize = useSelectedScreenSize();
-
+  const [editMode, setEditMode] = useState(false);
+  const hash = window.location.hash;
+  const parts = hash.split('/');
+  const firstPart = parts[1];
+  const lastPart = parts[parts.length - 1];
+  const hasId = !isNaN(Number(lastPart));
+  const id = Number(lastPart);
+  useEffect(() => {
+    if(firstPart === 'edit-template' && hasId === true){
+      setEditMode(true);
+    }
+  }, [firstPart, hasId]);
 
   let mainBoxSx: SxProps = {
     height: '100%',
@@ -98,7 +110,7 @@ export default function TemplatePanel() {
           
 
           <Stack direction="row" spacing={2}>
-            <DownloadJson />
+            {!!!editMode ? (<DownloadJson />): (<EditJson id={id} />)}
             <ImportJson />
             <ToggleButtonGroup value={selectedScreenSize} exclusive size="small" onChange={handleScreenSizeChange}>
               <ToggleButton value="desktop">

@@ -115,16 +115,16 @@ const schema = z.object({
   subject: z.string().min(1, { message: 'Subject is required' }),
 });
 
-export default function DownloadJson() {
+export default function EditJson({id}: {id: number}) {
   const doc = useDocument();
   const [open, setOpen] = useState(false);
   const [formValues, setFormValues] = useState({ title: '', text_content: '', subject: '' });
   const [errors, setErrors] = useState({});
-
-  const createNotificationMutation = useMutation({
+  
+  const editNotificationMutation = useMutation({
     mutationFn: (newNotification: any) => {
-      fetch('http://localhost:8003/notifications', {
-        method: 'POST',
+      fetch(`http://localhost:8003/notifications/${id}`, {
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -146,7 +146,7 @@ export default function DownloadJson() {
     setOpen(false);
   };
 
-  const handleCreate = () => {
+  const handleEdit= () => {
     try {
       // Validate the form values
       schema.parse(formValues);
@@ -158,7 +158,7 @@ export default function DownloadJson() {
         text_content: formValues.text_content,
         subject: formValues.subject,
       };
-      createNotificationMutation.mutate(newNotification);
+      editNotificationMutation.mutate(newNotification);
 
       handleClose();
     } catch (error) {
@@ -176,13 +176,13 @@ export default function DownloadJson() {
 
   return (
     <div>
-      <Tooltip title="Create this template">
+      <Tooltip title="Edit this template">
         <IconButton onClick={handleOpen}>
           <BorderColorSharp fontSize="small" />
         </IconButton>
       </Tooltip>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Create Notification</DialogTitle>
+        <DialogTitle>Edit Notification</DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
@@ -221,7 +221,7 @@ export default function DownloadJson() {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleCreate}>Create</Button>
+          <Button onClick={handleEdit}>Create</Button>
         </DialogActions>
       </Dialog>
     </div>
