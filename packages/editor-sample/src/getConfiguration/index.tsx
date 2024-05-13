@@ -15,6 +15,9 @@ export default function getConfiguration(template: string, data?:any){
     if (sampleName.startsWith('edit-template/')) {
       return MyTemplate({template: data?.json_content}); // Pass the template to EDIT_TEMPLATE
     }
+    if (sampleName.startsWith('create-template?')) {
+      return EMPTY_EMAIL_MESSAGE; // Pass the template to EDIT_TEMPLATE
+    }
     switch (sampleName) {
       case 'welcome':
         return WELCOME;

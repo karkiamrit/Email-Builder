@@ -21,7 +21,7 @@
 // //     // Convert the JSON object to a string and wrap it in a paragraph tag
 // //     return `<p>${JSON.stringify(json)}</p>`;
 // //   }
-  
+
 // //   const handleDownload = () => {
 // //     const newNotification = {
 // //       title: lastName,
@@ -87,7 +87,7 @@
 //     };
 //     createNotificationMutation.mutate(newNotification);
 //   };
-  
+
 //   console.log(createNotificationMutation.status); // "idle" | "loading" | "error" | "success"
 //   console.log(createNotificationMutation.error); // Any potential error
 
@@ -104,9 +104,19 @@ import React, { useState, useMemo } from 'react';
 import { z } from 'zod';
 import { useMutation } from '@tanstack/react-query';
 import { BorderColorSharp } from '@mui/icons-material';
-import { IconButton, Tooltip, Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button } from '@mui/material';
+import {
+  IconButton,
+  Tooltip,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  TextField,
+  DialogActions,
+  Button,
+} from '@mui/material';
 import { useDocument } from '../../../documents/editor/EditorContext';
 import { renderToStaticMarkup } from '@usewaypoint/email-builder';
+import { AES, enc } from 'crypto-js';
 
 // Define the validation schema
 const schema = z.object({
@@ -116,10 +126,27 @@ const schema = z.object({
 });
 
 export default function DownloadJson() {
+  const secretKey = import.meta.env.VITE_SECRET_KEY;
   const doc = useDocument();
   const [open, setOpen] = useState(false);
   const [formValues, setFormValues] = useState({ title: '', text_content: '', subject: '' });
   const [errors, setErrors] = useState({});
+
+  const url = new URL(window.location.href);
+  const hash = url.hash.slice(1); // remove the leading '#'
+  const [path, queryParams] = hash.split('?'); // split by '?'
+  const hashParams = new URLSearchParams(queryParams);
+  const token = hashParams.get('token');
+
+  let decryptedMessage = "";
+  if (token) {
+    const decodedToken = decodeURIComponent(token);
+    const decryptedBytes = AES.decrypt(decodedToken, secretKey);
+    const decryptedString = decryptedBytes.toString(enc.Utf8);
+    const decryptedObject = JSON.parse(decryptedString);
+    decryptedMessage = decryptedObject.token;
+  }
+
 
   const createNotificationMutation = useMutation({
     mutationFn: (newNotification: any) => {
@@ -127,6 +154,7 @@ export default function DownloadJson() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          authorization: `Bearer ${decryptedMessage}`,
         },
         body: JSON.stringify(newNotification),
       }).then((response: Response) => {
@@ -134,9 +162,9 @@ export default function DownloadJson() {
           throw new Error('Network response was not ok');
         }
         return response.json();
-      })
-    }}
-  );
+      });
+    },
+  });
 
   const handleOpen = () => {
     setOpen(true);
@@ -150,7 +178,7 @@ export default function DownloadJson() {
     try {
       // Validate the form values
       schema.parse(formValues);
-      let document= renderToStaticMarkup(doc, { rootBlockId: 'root' });
+      let document = renderToStaticMarkup(doc, { rootBlockId: 'root' });
       const newNotification = {
         title: formValues.title,
         html_content: `${document}`,
