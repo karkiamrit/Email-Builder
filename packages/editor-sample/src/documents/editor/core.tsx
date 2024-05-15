@@ -9,6 +9,7 @@ import { Html, HtmlPropsSchema } from '@usewaypoint/block-html';
 import { Image, ImagePropsSchema } from '@usewaypoint/block-image';
 import { Spacer, SpacerPropsSchema } from '@usewaypoint/block-spacer';
 import { Text, TextPropsSchema } from '@usewaypoint/block-text';
+
 import {
   buildBlockComponent,
   buildBlockConfigurationDictionary,
@@ -117,6 +118,7 @@ const EDITOR_DICTIONARY = buildBlockConfigurationDictionary({
       </EditorBlockWrapper>
     ),
   },
+
 });
 
 export const EditorBlock = buildBlockComponent(EDITOR_DICTIONARY);

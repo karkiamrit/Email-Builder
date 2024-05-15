@@ -49,7 +49,7 @@ export default function TemplatePanel() {
       ...mainBoxSx,
       margin: '32px auto',
       width: 370,
-      height: 800,
+      height: 800,  
       boxShadow:
         'rgba(33, 36, 67, 0.04) 0px 10px 20px, rgba(33, 36, 67, 0.04) 0px 2px 6px, rgba(33, 36, 67, 0.04) 0px 0px 1px',
     };

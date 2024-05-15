@@ -22,7 +22,6 @@ export default function TextSidebarPanel({ data, setData }: TextSidebarPanelProp
       setErrors(res.error);
     }
   };
-
   return (
     <BaseSidebarPanel title="Text block">
       <TextInput
@@ -30,7 +29,8 @@ export default function TextSidebarPanel({ data, setData }: TextSidebarPanelProp
         rows={5}
         defaultValue={data.props?.text ?? ''}
         onChange={(text) => updateData({ ...data, props: { ...data.props, text } })}
-      />
+        />
+       
 
       <MultiStylePropertyPanel
         names={['color', 'backgroundColor', 'fontFamily', 'fontSize', 'fontWeight', 'textAlign', 'padding']}

@@ -15,7 +15,6 @@ export default function EditorBlockWrapper({ children }: TEditorBlockWrapperProp
   const selectedBlockId = useSelectedBlockId();
   const [mouseInside, setMouseInside] = useState(false);
   const blockId = useCurrentBlockId();
-
   let outline: CSSProperties['outline'];
   if (selectedBlockId === blockId) {
     outline = '2px solid rgba(0,121,204, 1)';

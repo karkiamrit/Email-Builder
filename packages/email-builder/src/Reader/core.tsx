@@ -9,6 +9,7 @@ import { Html, HtmlPropsSchema } from '@usewaypoint/block-html';
 import { Image, ImagePropsSchema } from '@usewaypoint/block-image';
 import { Spacer, SpacerPropsSchema } from '@usewaypoint/block-spacer';
 import { Text, TextPropsSchema } from '@usewaypoint/block-text';
+
 import {
   buildBlockComponent,
   buildBlockConfigurationDictionary,
@@ -41,7 +42,6 @@ const READER_DICTIONARY = buildBlockConfigurationDictionary({
     schema: EmailLayoutPropsSchema,
     Component: EmailLayoutReader,
   },
-  //
   Avatar: {
     schema: AvatarPropsSchema,
     Component: Avatar,
@@ -73,7 +73,7 @@ const READER_DICTIONARY = buildBlockConfigurationDictionary({
   Text: {
     schema: TextPropsSchema,
     Component: Text,
-  },
+  }
 });
 
 export const ReaderBlockSchema = buildBlockConfigurationSchema(READER_DICTIONARY);
