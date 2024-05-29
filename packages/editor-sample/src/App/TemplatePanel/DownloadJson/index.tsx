@@ -127,6 +127,7 @@ const schema = z.object({
 
 export default function DownloadJson() {
   const secretKey = import.meta.env.VITE_SECRET_KEY;
+  console.log(secretKey)
   const doc = useDocument();
   const [open, setOpen] = useState(false);
   const [formValues, setFormValues] = useState({ title: '', text_content: '', subject: '' });
@@ -141,10 +142,16 @@ export default function DownloadJson() {
   let decryptedMessage = "";
   if (token) {
     const decodedToken = decodeURIComponent(token);
+    console.log(decodedToken)
+  
     const decryptedBytes = AES.decrypt(decodedToken, secretKey);
     const decryptedString = decryptedBytes.toString(enc.Utf8);
-    const decryptedObject = JSON.parse(decryptedString);
-    decryptedMessage = decryptedObject.token;
+    try {
+      const decryptedObject = JSON.parse(decryptedString);
+      decryptedMessage = decryptedObject.token;
+    } catch (error) {
+      console.error("Error parsing JSON:", error);
+    }
   }
 
 
