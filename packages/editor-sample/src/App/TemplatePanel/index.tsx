@@ -31,6 +31,7 @@ export default function TemplatePanel() {
   const url = new URL(window.location.href);
   const hash = url.hash.slice(1); // remove the leading '#'
   const [path, queryParams] = hash.split('?'); // split by '?'
+  console.log(queryParams)
   const parts = path.split('/'); // split by '/'
   const id = parts[parts.length - 1]; // take the last part
   const hasId = !isNaN(Number(id));

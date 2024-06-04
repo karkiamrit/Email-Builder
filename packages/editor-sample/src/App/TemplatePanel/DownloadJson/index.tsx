@@ -100,7 +100,7 @@
 //   );
 // }
 
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import { z } from 'zod';
 import { useMutation } from '@tanstack/react-query';
 import { BorderColorSharp } from '@mui/icons-material';
@@ -135,7 +135,8 @@ export default function DownloadJson() {
 
   const url = new URL(window.location.href);
   const hash = url.hash.slice(1); // remove the leading '#'
-  const [path, queryParams] = hash.split('?'); // split by '?'
+  let [path, queryParams] = hash.split('?'); // split by '?'
+  console.log(path);
   const hashParams = new URLSearchParams(queryParams);
   const token = hashParams.get('token');
 
@@ -198,8 +199,8 @@ export default function DownloadJson() {
       createNotificationMutation.mutate(newNotification);
 
       handleClose();
-    } catch (error) {
-      const zodErrors = error.errors.reduce((acc, curr) => {
+    } catch (error: any) {
+      const zodErrors = error.errors.reduce((acc: any, curr: any) => {
         acc[curr.path[0]] = curr.message;
         return acc;
       }, {});
@@ -207,7 +208,7 @@ export default function DownloadJson() {
     }
   };
 
-  const handleChange = (event) => {
+  const handleChange = (event:any) => {
     setFormValues({ ...formValues, [event.target.name]: event.target.value });
   };
 
@@ -230,8 +231,8 @@ export default function DownloadJson() {
             fullWidth
             value={formValues.title}
             onChange={handleChange}
-            error={!!errors.title}
-            helperText={errors.title}
+            error={!!(errors as any)?.title }
+            helperText={(errors as any)?.title}
           />
           <TextField
             margin="dense"
@@ -241,8 +242,8 @@ export default function DownloadJson() {
             fullWidth
             value={formValues.text_content}
             onChange={handleChange}
-            error={!!errors.text_content}
-            helperText={errors.text_content}
+            error={!!(errors as any)?.text_content}
+            helperText={(errors as any)?.text_content}
           />
           <TextField
             margin="dense"
@@ -252,8 +253,8 @@ export default function DownloadJson() {
             fullWidth
             value={formValues.subject}
             onChange={handleChange}
-            error={!!errors.subject}
-            helperText={errors.subject}
+            error={!!(errors as any)?.subject}
+            helperText={(errors as any)?.subject}
           />
         </DialogContent>
         <DialogActions>

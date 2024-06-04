@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useFetchNotification } from './hook/useFetchNotification';
 import { TEditorConfiguration } from '../../documents/editor/core';
 

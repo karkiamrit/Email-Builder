@@ -10,7 +10,7 @@ export default function ColumnsContainerReader({ style, props }: ColumnsContaine
   const { columns, ...restProps } = props ?? {};
   let cols = undefined;
   if (columns) {
-    cols = columns.map((col) => col.childrenIds.map((childId) => <ReaderBlock key={childId} id={childId} />));
+    cols = columns.map((col) => col.childrenIds.map((childId: any) => <ReaderBlock key={childId} id={childId} />));
   }
 
   return <BaseColumnsContainer props={restProps} columns={cols} style={style} />;

@@ -1,0 +1,11 @@
+import React, { useMemo } from 'react';
+import { renderToStaticMarkup } from '@usewaypoint/email-builder';
+import { useDocument } from '../../documents/editor/EditorContext';
+import HighlightedCodePanel from './helper/HighlightedCodePanel';
+export default function HtmlPanel() {
+    const document = useDocument();
+    console.log(document);
+    const code = useMemo(() => renderToStaticMarkup(document, { rootBlockId: 'root' }), [document]);
+    return React.createElement(HighlightedCodePanel, { type: "html", value: code });
+}
+//# sourceMappingURL=HtmlPanel.js.map

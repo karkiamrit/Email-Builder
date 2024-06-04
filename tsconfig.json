@@ -9,7 +9,7 @@
     "sourceMap": true,
     "allowJs": true,
     "esModuleInterop": true,
-
+    // "noEmitOnError": false,
     "skipLibCheck": true,
     "declarationMap": true,
     "declaration": true,
