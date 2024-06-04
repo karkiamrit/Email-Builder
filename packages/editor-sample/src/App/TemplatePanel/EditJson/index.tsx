@@ -24,9 +24,6 @@ const schema = z.object({
 });
 
 export default function EditJson({ id }: { id: number }) {
-
-
-
   const notification = useNotification();
   useEffect(() => {
     setFormValues({
@@ -61,7 +58,7 @@ export default function EditJson({ id }: { id: number }) {
   }
   const editNotificationMutation = useMutation({
     mutationFn: (newNotification: any) => {
-      fetch(`http://localhost:8003/notifications/${id}`, {
+      fetch(`${import.meta.env.VITE_API_URL}/notifications/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -74,6 +71,10 @@ export default function EditJson({ id }: { id: number }) {
         }
         return response.json();
       });
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      window.location.href = `${import.meta.env.VITE_FRONTEND_URL}/dashboard/email-campaign/create?templateId=${id}`;
     },
   });
 
@@ -100,8 +101,8 @@ export default function EditJson({ id }: { id: number }) {
       editNotificationMutation.mutate(newNotification);
 
       handleClose();
-    } catch (error:any) {
-      const zodErrors = error.errors.reduce((acc:any, curr:any) => {
+    } catch (error: any) {
+      const zodErrors = error.errors.reduce((acc: any, curr: any) => {
         acc[curr.path[0]] = curr.message;
         return acc;
       }, {});
@@ -109,7 +110,7 @@ export default function EditJson({ id }: { id: number }) {
     }
   };
 
-  const handleChange = (event:any) => {
+  const handleChange = (event: any) => {
     setFormValues({ ...formValues, [event.target.name]: event.target.value });
   };
 

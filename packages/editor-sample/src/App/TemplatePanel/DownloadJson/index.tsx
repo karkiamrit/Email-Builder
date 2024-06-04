@@ -30,7 +30,7 @@
 // //       subject: lastName,
 // //     };
 // //     console.log(newNotification)
-// //     axios.post('http://localhost:8003/notifications', newNotification)
+// //     axios.post('${import.meta.env.VITE_API_URL}/notifications', newNotification)
 // //   };
 // //   return (
 // //     <Tooltip title="Create this template">
@@ -64,7 +64,7 @@
 //   }
 //   const createNotificationMutation = useMutation({
 //     mutationFn: (newNotification: any) => {
-//       fetch('http://localhost:8003/notifications', {
+//       fetch('${import.meta.env.VITE_API_URL}/notifications', {
 //         method: 'POST',
 //         headers: {
 //           'Content-Type': 'application/json',
@@ -153,11 +153,9 @@ export default function DownloadJson() {
       console.error("Error parsing JSON:", error);
     }
   }
-
-
   const createNotificationMutation = useMutation({
     mutationFn: (newNotification: any) => {
-      fetch('http://localhost:8003/notifications', {
+      return fetch(`${import.meta.env.VITE_API_URL}/notifications`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -171,6 +169,10 @@ export default function DownloadJson() {
         return response.json();
       });
     },
+    onSuccess: (data) => {
+      console.log(data)
+      window.location.href = `${import.meta.env.VITE_FRONTEND_URL}/dashboard/email-campaign/create?templateId=${data.id}`;
+    }
   });
 
   const handleOpen = () => {

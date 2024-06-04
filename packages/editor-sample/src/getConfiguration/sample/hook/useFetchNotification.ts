@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 
 const fetchNotification = async (id: string) => {
-  const res = await fetch(`http://localhost:8003/notifications/${id}`);
+  const res = await fetch(`${import.meta.env.VITE_API_URL}/notifications/${id}`);
   if (!res.ok) {
     throw new Error('Network response was not ok');
   }

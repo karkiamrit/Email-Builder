@@ -47,7 +47,7 @@ export async function fetchNotification() {
     decryptedMessage = decryptedObject.token;
   }
 
-  const res = await fetch(`http://localhost:8003/notifications/${id}`, {
+  const res = await fetch(`${import.meta.env.VITE_API_URL}/notifications/${id}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
